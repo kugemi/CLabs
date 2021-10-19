@@ -35,10 +35,9 @@ void main()
 			{
 				printf("\nВы угадали!\nКоличество использованных попыток: %d", i + 1);
 				printf("\n\nХотите продолжить игру(Y/N)?\n");
-				n =_getch();
+				n = _getche();
 				n = toupper(n);
-				printf("\n");
-				_getche();
+				printf("\n\n");
 				break;
 			}
 			if (i == (numberOfAttempts - 1))
@@ -46,10 +45,9 @@ void main()
 				printf("\nПопытки кончились, вы не угадали:(");
 				printf("\nЗагаданное число-%d", randomNumber);
 				printf("\n\nХотите продолжить игру(Y/N)?\n");
-				n = _getch();
+				n = _getche();
 				n = toupper(n);
-				printf("\n");
-				_getche();
+				printf("\n\n");
 				break;
 			}
 			if (enteredNumber > randomNumber)

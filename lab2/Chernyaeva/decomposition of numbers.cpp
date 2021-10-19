@@ -9,7 +9,6 @@ int main()
 	setlocale(LC_ALL, "Russian");
 	int number;
 	int firstSummand;
-	int secondSummand;
 	printf("Введите четное число: ");
 	while ((scanf_s("%d", &number) == 0) || (number < 0) || (number % 2 != 0))
 	{
@@ -19,10 +18,8 @@ int main()
 	printf("\n");
 	for (firstSummand = 1; firstSummand <= (number / 2); firstSummand++)
 		if (checkingTheNumber(firstSummand))
-			for (secondSummand = 1; secondSummand <=(number-firstSummand); secondSummand++)
-				if (checkingTheNumber(secondSummand))
-					if ((firstSummand + secondSummand) == number)
-						printf(" %d = %d + %d \n",number, firstSummand, secondSummand);
+				if (checkingTheNumber(number-firstSummand))
+						printf(" %d = %d + %d \n",number, firstSummand, number-firstSummand);
 	_getch();
 
 }
