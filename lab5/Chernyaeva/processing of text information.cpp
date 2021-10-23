@@ -68,9 +68,7 @@ int main()
 				printf(" ");
 		}
 		printf("\n");
-		max = max - 1;
-		if (max == 0)
-			break;
+		max = max - 1;	
 	}
 	_getch();
 	return 0;
