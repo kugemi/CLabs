@@ -6,15 +6,15 @@
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	int symbol;
+	int symbol = 0;
 	int numbOfSymbols = 0;
 	int state = OUT;
-	int numbOfSymbolsInWord[100] = {};
-	int numbOfWordsInSent[100] = {};
+	int numbOfSymbolsInWord[100] = { 0 };
+	int numbOfWordsInSent[100] = { 0 };
 	int numbOfWords = 0;
 	int numbOfWords_1 = 0;
 	int numbOfSent = 0;
-	printf("Введите ваш текст. По окончании ввода нажмите Ctrl + Z\n");
+	printf("Enter your text. At the end of the input, press Ctrl + Z\n");
 	while ((symbol = getchar()) != EOF)
 	{
 		if (symbol == ' ' || symbol == '\t' || symbol == '\n')
@@ -40,7 +40,7 @@ int main()
 		}
 
 	}
-	printf("В тексте %d слов(а)\n", numbOfWords);
+	printf("There is(are) %d word(s) in the text\n", numbOfWords);
 	for (int i = 1; i < numbOfWords + 1; i++)
 	{
 		for (int k = 1; k < numbOfSymbolsInWord[i] + 1; k++)
@@ -49,10 +49,10 @@ int main()
 		}
 		printf("\n");
 	}
-	printf("\nВ тексте %d предложений\n", numbOfSent);
+	printf("\nThere is(are) %d sentence(s) in the text\n", numbOfSent);
 	for (int j = 1; j < numbOfSent + 1; j++)
 	{
-		printf("В %d предложении - %d слов(а). ", j, numbOfWordsInSent[j]);
+		printf("In %d sentence - %d word(s). ", j, numbOfWordsInSent[j]);
 	}
 	printf("\n");
 	printf("\n");
@@ -64,8 +64,8 @@ int main()
 			maxElem = numbOfWordsInSent[t];
 		}
 	}
-	int maxxElem = maxElem;
-	for (int n = 1; n <= maxxElem; n++)
+	int forCounter = maxElem;
+	for (int n = 1; n <= forCounter; n++)
 	{
 		for (int elem = 1; elem <= numbOfSent; elem++)
 		{
