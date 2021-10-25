@@ -16,6 +16,7 @@ int main()
 	int theNumberOfWordsInASentence[100];// колическво слов в предложениии
 	int max;
 	int constmax;
+	int word;
 	for (s = 0; s < 100; s++) { symbolsOfTheWord[s] = 0;  }
 	for (s = 0; s < 100; s++) { theNumberOfWordsInASentence[s] = 0; }
 	printf("Enter the text \n");
@@ -31,10 +32,12 @@ int main()
 		else if (state==OUT)
 		{
 			state = IN;
+			word = wordNumber;
 			wordNumber = wordNumber + 1;  
-			theNumberOfWordsInASentence[numberOfSentences ]++;
+			theNumberOfWordsInASentence[numberOfSentences]++;
 		}
-		if (state == IN) { symbolsOfTheWord[wordNumber-1]++; }
+		if (state == IN) { symbolsOfTheWord[word]++;
+	}
 	}
 	
 	printf("Number of words: %i", wordNumber);
@@ -42,7 +45,7 @@ int main()
 	for (k = 0; k <= wordNumber; k++) 
 	{
 		printf("\n");
-		for (i = 1; i <= symbolsOfTheWord[k-1]; i++) {printf("*"); }
+		for (i = 1; i <= symbolsOfTheWord[k]; i++) {printf("*"); }
 	}
 	printf("Number of sentences: %i\n", numberOfSentences);
 	for (i = 0; i < numberOfSentences; i++)
