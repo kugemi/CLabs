@@ -32,31 +32,30 @@ int main()
 		{
 			state = IN;
 			wordNumber = wordNumber + 1;  
-			theNumberOfWordsInASentence[numberOfSentences + 1]++;
+			theNumberOfWordsInASentence[numberOfSentences ]++;
 		}
-		if (state == IN) { symbolsOfTheWord[wordNumber]++; }
+		if (state == IN) { symbolsOfTheWord[wordNumber-1]++; }
 	}
 	
 	printf("Number of words: %i", wordNumber);
 	
-	for (k = 1; k <= wordNumber; k++) 
+	for (k = 0; k <= wordNumber; k++) 
 	{
 		printf("\n");
-		for (i = 1; i <= symbolsOfTheWord[k]; i++) {printf("*"); }
+		for (i = 1; i <= symbolsOfTheWord[k-1]; i++) {printf("*"); }
 	}
 	printf("Number of sentences: %i\n", numberOfSentences);
-	for (i = 1; i <= numberOfSentences; i++)
-		printf("in %i sentences %i words\n", i, theNumberOfWordsInASentence[i]);
+	for (i = 0; i < numberOfSentences; i++)
+		printf("in %i sentences %i words\n", i+1, theNumberOfWordsInASentence[i]);
 
 	
 	max = 0;
-	for (i = 1; i <= numberOfSentences; i++)
+	for (i = 0; i < numberOfSentences; i++)
 		if (theNumberOfWordsInASentence[i] > max)
 			max = theNumberOfWordsInASentence[i];
-
 	constmax = max;
 	for (i = 1; i <= constmax; i++) {
-		for (s = 1; s <= numberOfSentences; s++) {
+		for (s = 0; s < numberOfSentences; s++) {
 			if (max <= theNumberOfWordsInASentence[s] ) {
 				printf("*");
 			}
