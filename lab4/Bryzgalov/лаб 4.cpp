@@ -7,28 +7,32 @@
 int main (void){
 	setlocale(LC_ALL,"");
 
-	int num, yournum, attemps,countatt;
+	int num, yournum, attemps;
+	int flag = true;
 	char answ;
 
 	for (;;) {
-		fflush(stdin);
 		do {
+			flag = true;
 			printf_s("Введите количество попыток: ");
 			if (!scanf_s("%d", &attemps)) {
 				printf_s("Вы ввели не число! ");
-				attemps = getchar() == '\0';
+				flag=false;
+				while ((getchar()) != '\n');
 			}
-		} while ((attemps <= 0) || (attemps == '\0'));
+		} while ((attemps <= 0) || (attemps == '\0') || (flag == false));
 		srand(time(0));
 		num = rand() % 101;
-		for (countatt = 1; countatt <= attemps; countatt++) {
+		for (int countatt = 1; countatt <= attemps; countatt++) {
 			do {
+				flag = true;
 				printf("Угадайте число: ");
 				if (!scanf_s("%d", &yournum)) {
 					printf_s("Вы ввели не число! ");
-					yournum = getchar() == '\0';
+					flag = false;
+					while ((getchar()) != '\n');
 				}
-			} while ((yournum<0)||(yournum>100)||(yournum=='\0'));
+			} while ((yournum < 0) || (yournum > 100) || (yournum == '\0') || (flag == false));
 			if (yournum == num) {
 				printf_s("Вы угадали число %d с %d-ой попытки!\n", num, countatt);
 				break;
