@@ -12,22 +12,13 @@ int main()
     int number2;
     int minimum = 0;
     int attempts;
+    int attempts2;
     char word ;
-    printf("Начать игру Y/N?\n");
-    do 
-    {
-        scanf_s(" %c", &word);
-        if ((word != 'y') && (word != 'n'))
-        {
-            printf("Нужно написать Y или N. Вы написали что-то другое, я не понимаю.\n");
-        }
-        while (getchar() != '\n');
-    } while ((word != 'y') && (word != 'n'));
-    while (word == 'y') 
-    {
+    printf("Введите количество попыток, за которое вы сможете угадать:");
+    scanf_s("%d", &attempts2);
         srand(time(0));
         number1 = minimum + rand() % 100 + 1;
-        for (attempts = 1; attempts < 10; attempts++) {
+        for (attempts = 1; attempts <= attempts2; attempts++) {
             printf("Попытка номер %d:Введите номер:", attempts);
             scanf_s("%i", &number2);
             if (number1 > number2)
@@ -44,7 +35,7 @@ int main()
                 printf("Количество попыток %d\n", attempts);
                 break;
             }
-            if (number1 != number2 && attempts == 10)
+            if (number1 != number2 && attempts == attempts2)
             {
                 printf("Вы использовали все попытки, загаданное число было: %d\n", number1);
             }
@@ -58,7 +49,6 @@ int main()
             }
             while (getchar() != '\n');
         } while ((word != 'y') && (word != 'n'));
-    }
     _getch();
 }
 
