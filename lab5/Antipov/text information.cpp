@@ -13,13 +13,11 @@ int main() {
 	int kolvoSymvolovVSlove[100];
 	int nomerPredlozhenia = 0;
 	int kolvoSlovVPredlozhenii[100];
-	int index;
-	int kindex;
-	int zindex;
 	int max = 0;
 	int constmax = 0;
-	for (index = 0; index < 100; index++) { kolvoSymvolovVSlove[index] = 0; }
-	for (index = 0; index < 100; index++) { kolvoSlovVPredlozhenii[index] = 0; }
+	int slovo=0;
+	for (int index = 0; index < 100; index++) { kolvoSymvolovVSlove[index] = 0; }
+	for (int index = 0; index < 100; index++) { kolvoSlovVPredlozhenii[index] = 0; }
 	printf("Введите текст\n");
 	while ((symvol = getchar()) != EOF)
 	{
@@ -32,30 +30,31 @@ int main() {
 		}
 		else if (polozhenie == OUT) {
 			polozhenie = IN;
+			slovo = nomerSlova;
 			nomerSlova = nomerSlova + 1;;
 			kolvoSlovVPredlozhenii[nomerPredlozhenia]++;
 		}
-		if (polozhenie == IN) { kolvoSymvolovVSlove[nomerSlova-1]++; }
+		if (polozhenie == IN) { kolvoSymvolovVSlove[slovo]++; }
 	}
 	printf("Количество слов: %d", nomerSlova);
-	for (kindex = 0; kindex <= nomerSlova; kindex++)
+	for (int kindex = 0; kindex <= nomerSlova; kindex++)
 	{
 		printf("\n");
-		for (zindex = 1; zindex <= kolvoSymvolovVSlove[kindex]; zindex++)
+		for (int zindex = 1; zindex <= kolvoSymvolovVSlove[kindex]; zindex++)
 		{
 			printf("*");
 		}
 	}
 		printf("Количество предложений: %d\n", nomerPredlozhenia);
-		for (index = 0; index < nomerPredlozhenia; index++) 
+		for (int index = 0; index < nomerPredlozhenia; index++) 
 			printf("Количетсво слов в предложении %d = %d\n", index + 1, kolvoSlovVPredlozhenii[index]);
 		
-		for (index = 0; index < nomerPredlozhenia; index++)
+		for (int index = 0; index < nomerPredlozhenia; index++)
 			if (kolvoSlovVPredlozhenii[index] > max)
 				max = kolvoSlovVPredlozhenii[index];
 		constmax = max;
-		for (index = 1; index <= constmax; index++) {
-			for (zindex = 0; zindex < nomerPredlozhenia; zindex++) {
+		for (int index = 1; index <= constmax; index++) {
+			for (int zindex = 0; zindex < nomerPredlozhenia; zindex++) {
 				if (max <= kolvoSlovVPredlozhenii[zindex]) {
 					printf("*");
 				}
