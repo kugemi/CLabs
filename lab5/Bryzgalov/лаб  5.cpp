@@ -21,15 +21,15 @@ int main(void) {
 	}
 	printf_s("Введите текст (По окончанию ввода нажмите CTRL+Z): ");
 	while ((text = getchar()) != EOF) {
-		if ((text == ' ') || (text == '\n') || (text == '\t') || (text == ',') || (text == ':') || (text == ';')) status = OUT;
+		if ((text == ' ') || (text == '\n') || (text == '\t') ) status = OUT;
 		else if ((text == '.') || (text == '?') || (text == '!')) {
 			status = OUT;
 			quantOfProposal++;
 		}
 		else if (status == OUT) {
 			status = IN;
-			quantityOfWords[quantOfProposal]++;
 			wordCount++;
+			quantityOfWords[quantOfProposal]++;
 		}
 		if (status == IN) {
 			quantityOfSymbols[wordCount]++;
@@ -45,15 +45,15 @@ int main(void) {
 	}
 	printf_s("\n\n");
 	printf_s("Количество предложений - %d. ", quantOfProposal);
-	for (int numberOfProposal = 1; numberOfProposal <= quantOfProposal; numberOfProposal++) {
-		printf_s("В %d-м предложении %d слов. ", numberOfProposal, quantityOfWords[numberOfProposal]);
+	for (int numberOfProposal = 0; numberOfProposal < quantOfProposal; numberOfProposal++) {
+		printf_s("В %d-м предложении %d слов. ", numberOfProposal+1, quantityOfWords[numberOfProposal]);
 	}
-	for (int index = 1; index <= quantOfProposal; index++) {
+	for (int index = 0; index <= quantOfProposal; index++) {
 		if (quantityOfWords[index] > max) max = quantityOfWords[index];
 	}
 	printf_s("\n\n");
 	for (int i = max; i > 0; i--) {
-		for (int numberOfProposal=1; numberOfProposal <= quantOfProposal; numberOfProposal++) {
+		for (int numberOfProposal=0; numberOfProposal < quantOfProposal; numberOfProposal++) {
 			if (quantityOfWords[numberOfProposal] >= i) printf_s("*");
 			else printf_s(" ");
 		}
