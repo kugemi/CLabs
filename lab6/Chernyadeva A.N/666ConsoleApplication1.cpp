@@ -33,6 +33,7 @@ int main()
 	{
 		Space(50); printf("Вы ввели символ. Пожалуйста, будьте внимательны!\n\n");
 		getchar() != '\0';
+		break;
 	}
 	lineBreak;
 
