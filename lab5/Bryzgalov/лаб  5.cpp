@@ -51,6 +51,7 @@ int main(void) {
 	for (int index = 1; index <= quantOfProposal; index++) {
 		if (quantityOfWords[index] > max) max = quantityOfWords[index];
 	}
+	printf_s("\n\n");
 	for (int i = max; i > 0; i--) {
 		for (int numberOfProposal=1; numberOfProposal <= quantOfProposal; numberOfProposal++) {
 			if (quantityOfWords[numberOfProposal] >= i) printf_s("*");
