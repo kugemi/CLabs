@@ -9,9 +9,9 @@ int main()
 	int symbol = 0;
 	int numbOfSymbols = 0;
 	int state = OUT;
-	int numbOfSymbolsInWord[100] = { 0 };
-	int numbOfWordsInSent[100] = { 0 };
-	int numbOfWords = 0;
+	int numbOfSymbolsInWord[100] = {0};
+	int numbOfWordsInSent[100] = {0};
+	int numbOfWords = -1;
 	int numbOfSent = 0;
 	int wordsOfSent = 0;
 	printf("Enter your text. At the end of the input, press Ctrl + Z\n");
@@ -20,7 +20,7 @@ int main()
 		if (symbol == ' ' || symbol == '\t' || symbol == '\n')
 		{
 			state = OUT;
-			numbOfSymbolsInWord[numbOfWords - 1] = numbOfSymbols;
+			numbOfSymbolsInWord[numbOfWords] = numbOfSymbols;
 			numbOfSymbols = 0;
 		}
 		else
@@ -35,14 +35,14 @@ int main()
 		}
 		if (symbol == '.' || symbol == '!' || symbol == '?')
 		{
+			numbOfWordsInSent[numbOfSent] = wordsOfSent;
 			numbOfSent += 1;
-			numbOfWordsInSent[numbOfSent - 1] = wordsOfSent;
 			wordsOfSent = 0;
 		}
 
 	}
-	printf("There is(are) %d word(s) in the text\n", numbOfWords);
-	for (int i = 0; i < numbOfWords; i++)
+	printf("There is(are) %d word(s) in the text\n", numbOfWords + 1);
+	for (int i = 0; i < numbOfWords + 1; i++)
 	{
 		for (int k = 0; k < numbOfSymbolsInWord[i]; k++)
 		{
@@ -58,7 +58,7 @@ int main()
 	printf("\n");
 	printf("\n");
 	int maxElem = 0;
-	for (int t = 0; t < numbOfWords; t++)
+	for (int t = 0; t < numbOfWords  + 1; t++)
 	{
 		if (numbOfWordsInSent[t] > maxElem)
 		{
@@ -66,9 +66,9 @@ int main()
 		}
 	}
 	int forCounter = maxElem;
-	for (int n = 0; n <= forCounter - 1; n++)
+	for (int n = 0; n < forCounter; n++)
 	{
-		for (int elem = 0; elem <= numbOfSent - 1; elem++)
+		for (int elem = 0; elem < numbOfSent; elem++)
 		{
 			if (numbOfWordsInSent[elem] >= maxElem)
 			{
