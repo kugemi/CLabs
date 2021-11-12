@@ -5,6 +5,7 @@
 #define OUT 0
 int main()
 {
+	// Пожалуйста, я все исправить
 	setlocale(LC_ALL, "Russian");
 	int symbol = 0;
 	int numbOfSymbols = 0;
