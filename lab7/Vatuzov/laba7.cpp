@@ -3,6 +3,7 @@
 #include<conio.h>
 #include<locale.h>
 #include<cmath>
+#include<stdlib.h>
 int main()
 {
 	setlocale(LC_ALL,"Russian");
@@ -16,8 +17,8 @@ int main()
 	printf("Введите количество предметов и грузоподъемность: ");
 	scanf_s("%d %d",&Number,&Tonnage);
 	printf("\n");
-	int* arrayWeight = new int[Number];
-	int* arrayValue = new int[Number];
+	int* arrayWeight = (int*)malloc(Number*sizeof(int));
+	int* arrayValue = (int*)malloc(Number * sizeof(int));
 	for (int index = 0; index < Number; index++) {
 		arrayWeight[index] = 0;
 		arrayValue[index] = 0;
