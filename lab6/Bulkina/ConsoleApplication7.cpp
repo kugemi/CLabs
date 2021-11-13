@@ -3,7 +3,6 @@
 #include<conio.h>
 #include<locale.h>
 
-
 void conversionToBinaryNotation(int number)
 {
 	int index,constant;
@@ -17,7 +16,7 @@ void conversionToBinaryNotation(int number)
 
 int main()
 {
-	unsigned Number;
+	unsigned char Number;
 	int shiftSide, Index, numberOfShifts;
 	setlocale(LC_ALL, "Russian");
 
