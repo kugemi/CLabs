@@ -5,14 +5,13 @@
 #define OUT 0
 int main()
 {
-	// Пожалуйста, я все исправить
 	setlocale(LC_ALL, "Russian");
 	int symbol = 0;
 	int numbOfSymbols = 0;
 	int state = OUT;
 	int numbOfSymbolsInWord[100] = {0};
 	int numbOfWordsInSent[100] = {0};
-	int numbOfWords = -1;
+	int numbOfWords = 0;
 	int numbOfSent = 0;
 	int wordsOfSent = 0;
 	printf("Enter your text. At the end of the input, press Ctrl + Z\n");
@@ -23,6 +22,7 @@ int main()
 			state = OUT;
 			numbOfSymbolsInWord[numbOfWords] = numbOfSymbols;
 			numbOfSymbols = 0;
+			numbOfWords += 1;
 		}
 		else
 		{
@@ -30,7 +30,7 @@ int main()
 			if (state == OUT)
 			{
 				state = IN;
-				numbOfWords += 1;
+				
 				wordsOfSent += 1;
 			}
 		}
@@ -42,7 +42,7 @@ int main()
 		}
 
 	}
-	printf("There is(are) %d word(s) in the text\n", numbOfWords + 1);
+	printf("There is(are) %d word(s) in the text\n", numbOfWords);
 	for (int i = 0; i < numbOfWords + 1; i++)
 	{
 		for (int k = 0; k < numbOfSymbolsInWord[i]; k++)
