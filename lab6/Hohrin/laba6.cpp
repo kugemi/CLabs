@@ -6,43 +6,49 @@
 int main()
 {
 	setlocale(LC_ALL, "russian");
-	int input, shiftRight, shiftLeft, binaryInput, counter, counterRight, counterLeft, binary;
-	input = shiftRight = shiftLeft = counter = binaryInput = counterRight = counterLeft = 1;
-	binary = 2;
-	int binaryArray[100] = { 0 };
-	int binaryReverse[100] = { 0 };
-	printf("Введите число:");
+	int  shift, counter, inputRight, input1, shiftDir;
+	int input = 0;
+	long int binaryLeft = 0;
+	int binaryInput = 0;
+	int inputLeft = 0;
+	shift = counter = inputRight = input1 = shiftDir = 0;
+	counter = 1;
+
+	printf("Введите число от 1 до 1023:");
 	scanf_s("%d", &input);
+	binaryInput = 0;
+	input1 = input;
 	printf("Введите число сдвигов влево:");
-	scanf_s("%d", &shiftLeft);
-	printf("Введите число сдвигов вправо:");
-	scanf_s("%d", &shiftRight);
+	scanf_s("%d", &shift);
+	printf("Введите 1 для сдвига вправо, или 2 для сдвига влево.");
+	scanf_s("%d", &shiftDir);
+	printf("Изначальное число:%d\n", input);
+	printf("Двоичная запись числа:");
+
 	while (input > 0)
 	{
-		binaryReverse[counter] = input % 2;
-		input = input / 2;
+		binaryInput += ((input % 2) * pow(10, counter));
+		input /= 2;
 		counter++;
 	}
-	counter--;
-	for (int i = 0; i < counter; i++)
+	binaryInput /= 10;
+	printf("%032d", binaryInput);
+	// Сдвиг влево
+	if (shiftDir == 2)
 	{
-		binaryArray[i] = binaryReverse[counter - i];
-	}
-	printf("Двоичная запись числа:");
-	for (int i = 0; i < counter; i++)
-	{
-		printf("%d", binaryArray[i]);
-	}
-	printf("\n Двоичная запись числа с сдвигом влево:");
-	for (int i = 0; i < counter; i++)
-	{
-		printf("%d", binaryArray[(i + shiftLeft) % counter]);
-	}
-
-	printf("\nДвоичная запись числа с сдвигом вправо:");
-	for (int i = 0; i < counter; i++)
-	{
-		printf("%d", binaryArray[((abs(counter*shiftRight) + i - shiftRight) % counter)]);
+		inputLeft = ((input1 << shift) + (input1 >> (32 - shift)));
+		printf("\nЧисло со сдвигом влево:%d\n", inputLeft);
+		counter = 1;
+		
+		while (inputLeft > 1)
+		{
+			printf("\n%d", binaryLeft);
+			binaryLeft += ((inputLeft % 2) * int(pow(10, counter)));
+			inputLeft /= 2;
+			counter++;
+		}
+		printf("\n%d", binaryLeft);
+		printf("\n\nЧисло со сдвигом влево в двоичной системе:%032d", binaryLeft);
 	}
 
 }
