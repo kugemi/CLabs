@@ -5,9 +5,8 @@
 int main(void) {
 	setlocale(LC_ALL, "");
 
-	int itemsNum[1022]= {0};
-	int itemsWeight[1022] = {0};
-	int itemsValue[1022] = {0};
+	int itemsWeight[30] = {0};
+	int itemsValue[30] = {0};
 	int capacity = 0;
 	int num = 0;
 	int maxValue = 0;
@@ -27,9 +26,8 @@ int main(void) {
 			printf_s("Вы ввели не число! ");
 			while ((getchar()) != '\n');
 		}
-	} while ((quant <= 0) || (flag == 0)||(quant>=1023));
+	} while ((quant <= 0) || (flag == 0)||(quant>30));
 	for (num = 0; num < quant; num++) {
-		itemsNum[num] = num + 1;
 		do {
 			flag = 1;
 			printf_s("Введите вес %d-го предмета: ", num + 1);
@@ -63,7 +61,7 @@ int main(void) {
 
 	printf_s("Ваши предметы: \n");
 	for (num = 0; num < quant; num++) {
-		printf_s("Предмет %d: вес - %d    полезность - %d\n", itemsNum[num], itemsWeight[num], itemsValue[num]);
+		printf_s("Предмет %d: вес - %d    полезность - %d\n", num+1, itemsWeight[num], itemsValue[num]);
 	}
 	printf_s("________________________________\n");
 
@@ -87,7 +85,7 @@ int main(void) {
 
 	printf_s("Оптимальнее всего взять предметы: ");
 	for (int i = 0; i <capacity; i++) {
-		if (opimalMask & (mask << i)) printf_s("%d, ", itemsNum[i]);
+		if (opimalMask & (mask << i)) printf_s("%d, ", i+1);
 	}
 	printf_s("\nЦенность: %d\nВес: %d",maxValue,maxWeight);
 	}
