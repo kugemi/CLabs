@@ -5,7 +5,7 @@
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	unsigned short int num = 0;
+	unsigned int num = 0;
 	int sdvig = 0;
 	int Napravlenie = 0;
 	printf("Введите число: ");
@@ -20,9 +20,9 @@ int main()
 		if (index % 4 == 0) printf(" ");
 	}
 	printf("\n");
-	printf("Выберите направление сдвига\n");
-	printf("1)Влево\n");
-	printf("2)Вправо\n");
+	printf("Выберите направление сдвига:\n");
+	printf("1.Влево\n");
+	printf("2.Вправо\n");
 	scanf_s("%d", &Napravlenie);
 
 	if (Napravlenie == 1)
@@ -41,19 +41,19 @@ int main()
 	{
 		for (int vpravo = 0; vpravo < sdvig; vpravo++)
 		{
-			if (num % 2 ==1 ) {
+			if (num % 2 == 1) {
 				num >>= 1;
-					num += 1 << 15;
+				num += 1 << 15;
 			}
 			else num >>= 1;
 		}
 	}
 	printf("Число %hu в двочной системе после сдвига = ", num);
-		for (int kindex = 15; kindex >= 0; kindex--)
-		{
-			if (num & (1 << kindex)) printf("1");
-			else printf("0");
-			if (kindex % 4 == 0) printf(" ");
-		}
+	for (int kindex = 15; kindex >= 0; kindex--)
+	{
+		if (num & (1 << kindex)) printf("1");
+		else printf("0");
+		if (kindex % 4 == 0) printf(" ");
+	}
 	_getch();
 }
