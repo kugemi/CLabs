@@ -41,6 +41,7 @@ int main()
 	}
 	if (trigger == 0) printf("Матрица симметрична относительно вертикали\n");
 	else if (trigger == 1) printf("Матрица не симметрична относительно вертикали\n");
+	trigger = 0;
 	for (int i = 0; i < size / 2; i++)
 	{
 		for (int j = 0; j < size; j++)
