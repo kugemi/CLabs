@@ -3,7 +3,6 @@
 #include <locale.h>
 #include <string.h>
 #include <stdlib.h> // для динамики
-#include <iostream>
 #define Space(lenghtString) for (int i = 0; i < ((80-lenghtString)/2); i++) printf(" ")
 
 
@@ -53,7 +52,6 @@ int main()
 	Space(30); printf("!!! на ввод русские символы. !!!\n");
 	Space(38); printf("--------------------------------------\n\n");
 	Space(23); printf("Начинайте вводить текст\n");
-	Space(35); printf("Каждая строка не более 160 символов\n");
 	Space(64); printf("----------------------------------------------------------------\n");
 
 	//Объявляем бесконечный цикл, который будет считать кол-во введённых строк
@@ -68,9 +66,39 @@ int main()
 
 		// Выделяем ОГРАНИЧЕННУЮ память под 160 символов типа char
 		// НО выдаёт ошибку точки останова
-		userString = (char*)malloc(sizeof(char) * 160);
+
+
+		
+		int emptyCell = 2;  //Количество оставшихся пустых ячеек в выделенной памяти
+		int StaticemptyCell = emptyCell; //Кол-во выделенных пустях ячеек
+
+		userString = (char*)malloc(sizeof(char) * emptyCell);
 		while ((userChar = getchar()) != '\n')
 		{
+			if (emptyCell == 0)
+			{
+				emptyCell = StaticemptyCell * 2;  //увеличиваем кол-вo ячеек памяти вдвое
+				//Копируем содержимое рабочей строки в новую
+				char* userStringcopy = (char*)malloc(sizeof(char) * (lenght+1)); //вызывает срабатывание точки останова, если ввести очень большую строчку, я хз почему           
+				CopyingString(userStringcopy, userString);
+
+				//Освобождаем память
+				userString = NULL;
+				free(userString);
+
+				// Выделяем новую память 
+				userString = (char*)malloc(sizeof(char) * (emptyCell + StaticemptyCell));
+
+				//Копируем из резерва в свежую память
+				CopyingString(userString, userStringcopy);
+
+				//Чистим копию
+				userStringcopy = NULL;
+				free(userStringcopy);
+
+				StaticemptyCell = emptyCell;
+			}
+			emptyCell--;
 			//Выделяем и распределяем память для строки. Увеличивается с каждым новым символом.
 			//userString = (char*)realloc(userString, sizeof(char) * (lenght + 1));
 			if (userString)
@@ -165,7 +193,7 @@ int main()
 	Space(k); printf("  | Текст удалён \n");
 	Space(k); printf("  ------------------------------------\n");
 
-	TADAAA();
+	//TADAAA();
 }
 
 char** addString(char** arrayString, int stringCount, char* uString, int lenghtString)
