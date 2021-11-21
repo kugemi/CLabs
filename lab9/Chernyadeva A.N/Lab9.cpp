@@ -53,7 +53,9 @@ int main()
 	Space(30); printf("!!! на ввод русские символы. !!!\n");
 	Space(38); printf("--------------------------------------\n\n");
 	Space(23); printf("Начинайте вводить текст\n");
+	Space(35); printf("Каждая строка не более 160 символов\n");
 	Space(64); printf("----------------------------------------------------------------\n");
+
 	//Объявляем бесконечный цикл, который будет считать кол-во введённых строк
 	for (stringCount = 0; ; stringCount++)
 	{
@@ -63,10 +65,14 @@ int main()
 		//Обнуляем строку, дабы не было в ней мусора, и длину строки
 		userString = NULL;
 		lenght = 0;
+
+		// Выделяем ОГРАНИЧЕННУЮ память под 160 символов типа char
+		// НО выдаёт ошибку точки останова
+		userString = (char*)malloc(sizeof(char) * 160);
 		while ((userChar = getchar()) != '\n')
 		{
 			//Выделяем и распределяем память для строки. Увеличивается с каждым новым символом.
-			userString = (char*)realloc(userString, sizeof(char) * (lenght + 1));
+			//userString = (char*)realloc(userString, sizeof(char) * (lenght + 1));
 			if (userString)
 			{
 				userString[lenght] = userChar;
@@ -166,21 +172,21 @@ char** addString(char** arrayString, int stringCount, char* uString, int lenghtS
 {
 	if (stringCount == 0)  //Если кол-во строк равно нулю...
 	{
-		arrayString = new char* [stringCount + 1];  //...то мы выделяем память для одной строчки в исходном массиве строк
+		arrayString = (char**)malloc(sizeof(char*)*(stringCount + 1)); //...то мы выделяем память для одной строчки в исходном массиве строк
 	}
 	else
 	{
-		char** copy = new char* [stringCount + 1];  //Выделяем память для строчки 
+		char** copy = (char**)malloc(sizeof(char*) * (stringCount + 1));  //Выделяем память для строчки 
 		for (int i = 0; i < stringCount; i++)  // копируются все предыдущие строчки, которые уже были внесены в массив строк
 		{
 			copy[i] = arrayString[i];
 		}
-		delete[] arrayString;  //освобождаем память в исходном массиве 
+		free(arrayString);  //освобождаем память в исходном массиве 
 		arrayString = copy;    //и сохраняется копия со всеми введёнными строками
 	}
 
 	//Добавляется последняя введённая строчка
-	arrayString[stringCount] = new char[lenghtString + 1];
+	arrayString[stringCount] = (char*)malloc(sizeof(char) * (lenghtString + 1));
 	CopyingString(arrayString[stringCount], uString);
 
 	//Возвращается массив строк
@@ -245,12 +251,6 @@ char** SortingString(char** text, int strcout)
 			{
 				//создаём новый указатель 
 				char* emptyString = new char[strlen(stringFROMtexts[i])];
-
-				//*emptyString = *stringFROMtexts[i];
-				//*stringFROMtexts[i] = *stringFROMtexts[j];
-				//*stringFROMtexts[j] = *emptyString;
-				// 
-				// 
 				CopyingString(emptyString, stringFROMtexts[i]);
 				CopyingString(stringFROMtexts[i], stringFROMtexts[j]);
 				CopyingString(stringFROMtexts[j], emptyString);
