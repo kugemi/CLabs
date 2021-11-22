@@ -63,44 +63,17 @@ int main()
 		//Обнуляем строку, дабы не было в ней мусора, и длину строки
 		userString = NULL;
 		lenght = 0;
-
-		// Выделяем ОГРАНИЧЕННУЮ память под 160 символов типа char
-		// НО выдаёт ошибку точки останова
-
-
 		
-		int emptyCell = 2;  //Количество оставшихся пустых ячеек в выделенной памяти
-		int StaticemptyCell = emptyCell; //Кол-во выделенных пустях ячеек
-
+		int emptyCell = 2;  //Количество пустых ячеек в выделенной памяти
 		userString = (char*)malloc(sizeof(char) * emptyCell);
 		while ((userChar = getchar()) != '\n')
 		{
-			if (emptyCell == 0)
+			if (emptyCell<=lenght)
 			{
-				emptyCell = StaticemptyCell * 2;  //увеличиваем кол-вo ячеек памяти вдвое
-				//Копируем содержимое рабочей строки в новую
-				char* userStringcopy = (char*)malloc(sizeof(char) * (lenght+1)); //вызывает срабатывание точки останова, если ввести очень большую строчку, я хз почему           
-				CopyingString(userStringcopy, userString);
-
-				//Освобождаем память
-				userString = NULL;
-				free(userString);
-
-				// Выделяем новую память 
-				userString = (char*)malloc(sizeof(char) * (emptyCell + StaticemptyCell));
-
-				//Копируем из резерва в свежую память
-				CopyingString(userString, userStringcopy);
-
-				//Чистим копию
-				userStringcopy = NULL;
-				free(userStringcopy);
-
-				StaticemptyCell = emptyCell;
+				emptyCell *= 2;
+				userString = (char*)realloc(userString, emptyCell * sizeof(char*));
 			}
-			emptyCell--;
-			//Выделяем и распределяем память для строки. Увеличивается с каждым новым символом.
-			//userString = (char*)realloc(userString, sizeof(char) * (lenght + 1));
+			
 			if (userString)
 			{
 				userString[lenght] = userChar;
@@ -193,7 +166,7 @@ int main()
 	Space(k); printf("  | Текст удалён \n");
 	Space(k); printf("  ------------------------------------\n");
 
-	//TADAAA();
+	TADAAA();
 }
 
 char** addString(char** arrayString, int stringCount, char* uString, int lenghtString)
