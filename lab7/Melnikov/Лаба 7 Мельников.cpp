@@ -15,6 +15,7 @@ int main()
 	int goodWeight = 0;
 	int yourBackpack = 0;
 	int needToTake = 0;
+	int mask = 1;
 	printf("Enter the number of items\n");
 	scanf_s("%d", &numbOfItems);
 	printf("Enter enter their weight\n");
@@ -89,10 +90,15 @@ int main()
 	printf("Your need to take:\n");
 	for (int b = 0; b < numbOfItems; b++)
 	{
-		printf("%d", items[needToTake][b]);
+		if (items[needToTake][b] & mask)  //Georgiy, ya ispolzoval bitovuy operaziu
+		{								//Please, primi rabotu ;(
+			printf("%d ", b + 1);
+		}
 	}
+	printf("item\n");
 	printf("\n");
 	printf("Wight: %d", goodWeight);
 	printf("\n");
 	printf("Value: %d", maxValue);
+	printf("\n");
 }

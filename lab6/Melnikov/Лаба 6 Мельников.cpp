@@ -5,14 +5,14 @@
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	unsigned short int Number = 0;
+	unsigned int Number = 0;
 	int Shift = 0;
 	int Direction = 0;
 	printf("Choose a number: ");
-	scanf_s("%hu", &Number);
+	scanf_s("%u", &Number);
 	printf("\n");
-	printf("Binary representation of a number %hu = ", Number);
-	for (int binary = 15; binary >= 0; binary--)
+	printf("Binary representation of a number %u = ", Number);
+	for (int binary = 31; binary >= 0; binary--)
 	{
 		if (Number & (1 << binary)) printf("1");
 		else printf("0");
@@ -33,7 +33,7 @@ int main()
 			if (Number % 2 == 1)
 			{
 				Number >>= 1;
-				Number += 1 << 15;
+				Number += 1 << 31;
 			}
 			else Number >>= 1;
 		}
@@ -43,7 +43,7 @@ int main()
 	{
 		for (int directionLeft = 0; directionLeft < Shift; directionLeft++)
 		{
-			if (Number & (1 << 15))
+			if (Number & (1 << 31))
 			{
 				Number <<= 1;
 				Number += 1;
@@ -54,7 +54,7 @@ int main()
 	}
 	}
 	printf("Binary representation of a number %d after shift = ", Number);
-	for (int binaryNew = 15; binaryNew >= 0; binaryNew--)
+	for (int binaryNew = 31; binaryNew >= 0; binaryNew--)
 	{
 		if (Number & (1 << binaryNew)) printf("1");
 		else printf("0");
