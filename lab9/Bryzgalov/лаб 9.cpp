@@ -33,11 +33,11 @@ char** sort(char** txt, int quantOfStrings) {
 int main(void) {
 	setlocale(LC_ALL, "");
 
-	int i, j, k, len, n = 0;
+	int i, j, k, len, stringQuant = 0;
 	char** text = NULL;
 	char* buffer = NULL;
-	char** dop = NULL;
-	char ch = NULL;
+	char** dopbuf = NULL;
+	char textChar = NULL;
 
 	printf_s("Введите ваш текст:\n");
 	for (i = 1;; i++) {
@@ -45,13 +45,13 @@ int main(void) {
 		len = 0;
 		k = 2;
 		buffer = (char*)malloc(k * sizeof(char));
-		while ((ch = getchar()) != '\n') {
+		while ((textChar = getchar()) != '\n') {
 			while (k <= len) {
 				k++;
 				buffer = (char*)realloc(buffer, k * sizeof(char));
 			}
 			if (buffer!=NULL) {
-				buffer[len] = ch;
+				buffer[len] = textChar;
 				len++;
 			}
 		}
@@ -63,22 +63,22 @@ int main(void) {
 			break;
 		}
 		if (i != 1) {
-			dop = (char**)malloc(sizeof(char*) * i);
-			for (j = 0; j < i; j++) dop[j] = text[j];
+			dopbuf = (char**)malloc(sizeof(char*) * i);
+			for (j = 0; j < i; j++) dopbuf[j] = text[j];
 			free(text);
-			text = dop;
+			text = dopbuf;
 		}
 		else text = (char**)malloc(sizeof(char*) * i);
 		text[i - 1] = (char*)malloc((len + 1) * sizeof(char));
 		strcpy(text[i - 1], buffer);
 		free(buffer);
-		n = i;
+		stringQuant = i;
 	}
 
 
 	printf_s("__________________\n\nВаш текст:\n");
-	for (i = 0; i < n; i++) printf_s("Строка №%d: %s\n",i+1, text[i]);
+	for (i = 0; i < stringQuant; i++) printf_s("Строка №%d: %s\n",i+1, text[i]);
 	printf_s("__________________\n\nОтсортированный тектст:\n");
-	text = sort(text, n);
-	for (i = 0; i < n; i++) printf_s("Строка №%d: %s\n", i + 1, text[i]);
+	text = sort(text, stringQuant);
+	for (i = 0; i < stringQuant; i++) printf_s("Строка №%d: %s\n", i + 1, text[i]);
 }
