@@ -32,11 +32,11 @@ int main() {
 	}
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < (size / 2); j++) {
-			if (matrix[j][i] != matrix[size - 1 - j][i])
+			if ((matrix[j][i] != matrix[size - 1 - j][i])&&(horizontal==0))
 				horizontal = 1;
-			if (matrix[i][j] != matrix[i][size - 1 - j])
+			if ((matrix[i][j] != matrix[i][size - 1 - j])&&(vertical==0))
 				vertical = 1;
-			if ((matrix[j][i] != matrix[size - 1 - j][size - 1 - i]) || (matrix[j][size - 1 - i] != matrix[size - 1 - j][i]))
+			if (((matrix[j][i] != matrix[size - 1 - j][size - 1 - i]) || (matrix[j][size - 1 - i] != matrix[size - 1 - j][i]))&&(centre==0))
 				centre = 1;
 		}
 	printf("\n\x03матрица %s относительно горизонтали", check[horizontal]);
