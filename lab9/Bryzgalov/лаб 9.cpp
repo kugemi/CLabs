@@ -5,8 +5,19 @@
 #include <string.h>
 
 int strcmp_my(char* str1, char* str2) {
-	if (*str1 >= *str2) return 0;
-	else return 1;
+	while (*str1 && *str2)
+	{
+		if (*str1 == *str2)
+		{
+			str1++;
+			str2++;
+			continue;
+		}
+		if (*str1 < *str2) return 1;
+		else return 0;
+	}
+	if (!(*str1) && !(*str2))
+		return 0;
 }
 
 char** sort(char** txt, int quantOfStrings) {
