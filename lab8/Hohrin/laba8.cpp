@@ -20,7 +20,13 @@ int main()
 			scanf_s("%d", &inputArray[i][j]);
 		}
 	}
-
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			printf("%d", inputArray[i][j]);
+		}
+	}
 	for (int i = 0; i < size / 2; i++)
 	{
 		for (int j = 0; j < size; j++)
