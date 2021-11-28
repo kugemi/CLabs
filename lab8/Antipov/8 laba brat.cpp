@@ -11,7 +11,7 @@ int main()
 	int sovpadenie = 0;
 	do {
 		printf("Введи размеры матрицы, брат ");
-		scanf_s("%в", &dlina);
+		scanf_s("%d", &dlina);
 	} while (dlina % 2 == 0);
 	for (int s = 0; s < dlina; s++)
 	{
@@ -36,40 +36,40 @@ int main()
 	{
 		for (int t = 0; t < dlina; t++)
 		{
-			if (matrix[s][t] == matrix[k - s][t])
+			if (matrix[s][t] != matrix[k - s][t])
 			{
-				check++;
+				break;
 			}
+			else check++;
+
 		}
 	}
 	if (check == sovpadenie) { printf("\nМатрица симметрична по горизонтали, брат\n"); }
-	else { printf("\nМатрица не симметрична по горизонтали, брат\n"); }
 
 	check = 0;
 	for (int s = 0; s < dlina; s++)
 	{
 		for (int t = 0; t < dlina; t++)
 		{
-			if (matrix[s][t] == matrix[s][k - t])
+			if (matrix[s][t] != matrix[s][k - t])
 			{
-				check++;
+				break;		
 			}
+			else check++;
 		}
 	}
 	if (check == sovpadenie) { printf("Матрица симметрична по вертикали, брат\n"); }
-	else { printf("Матрица не симметрична по вертикали, брат\n"); }
 
 	check = 0;
 	for (int s = 0; s < dlina; s++)
 	{
 		for (int t = 0; t < dlina; t++)
 		{
-			if (matrix[s][t] == matrix[k - s][k - t])
-			{
-				check++;
+			if (matrix[s][t] != matrix[k - s][k - t]) {
+				break;
 			}
+			else check++;
 		}
+		if (check == sovpadenie) { printf("Матрица симметрична по центру, брат \n"); }
 	}
-	if (check == sovpadenie) { printf("Матрица симметрична по центру, брат \n"); }
-	else { printf("Матрица не симметрична по центру, брат\n"); }
 }
