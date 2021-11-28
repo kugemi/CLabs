@@ -1,0 +1,111 @@
+#include <conio.h>
+#include <stdio.h>
+#include <locale.h>
+#include<math.h>
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    int nN; //размер
+    int array[100][100]; //массив
+    int column; //столбец
+    int line; //линия
+    bool horizontal = true;
+    bool vertical = true;
+    bool center = true;
+
+    printf("Введите размер квадратной матрицы NxN (N - нечётное целое число): ");
+    scanf_s("%d", &nN);
+    if (nN % 2 == 0)
+    {
+        printf("Нужно ввести нечётное число: ");
+        scanf_s("%d", &nN);
+    }
+    printf("\n");
+
+    printf("Введите элементы массива (числа целые):\n ");
+    for (line = 0; line < nN; line++)
+    {
+        for (column = 0; column < nN; column++)
+        {
+            
+            printf("a[%d][%d] = ", line, column);
+            scanf_s("%d", &array[line][column]);
+            printf(" ");
+        }
+    }
+    printf("\n");
+
+    printf("Матрица:\n ");
+    for (line = 0; line < nN; line++)
+    {
+        for (column = 0; column < nN; column++)
+        {
+            printf("%d", array[line][column]);
+        }
+        printf("\n");
+        printf(" ");
+    }
+    printf("\n");
+
+    for (line = 0; line < nN / 2; line++)
+    {
+        for (column = 0; column < nN; column++)
+        {
+            if (array[line][column] != array[nN - line - 1][column])
+            {
+                horizontal = false;
+                break;
+            }
+        }
+    }
+    if (vertical == false)
+    {
+        printf("Горизонтальная симметрия матрицы отсутсвует\n");
+    }
+    else if (vertical == true)
+    {
+        printf("Горизонтальная симметрия матрицы есть\n");
+    }
+    
+
+    for (line = 0; line < nN; line++)
+    {
+        for (column = 0; column < nN / 2; column++)
+        {
+            if (array[line][column] != array[line][nN - column - 1])
+            {
+                vertical = false;
+                break;
+            }
+        }
+    }
+    if (vertical == false)
+    {
+        printf("Вертикальная симметрия матрицы отсутсвует\n");
+    }
+    else if (vertical == true)
+    {
+        printf("Вертикальная симметрия матрицы есть\n");
+    }
+
+    for (line = 0; line < nN / 2; line++)
+    {
+        for (column = 0; column < nN / 2; column++)
+        {
+            if (array[line][column] != array[nN - line][nN - column])
+            {
+                 center= false;
+                break;
+            }
+        }  
+    }
+    if (vertical == false)
+    {
+        printf("Центральная симметрия матрицы отсутсвует\n");
+    }
+    else if (vertical == true)
+    {
+        printf("Центральная симметрия матрицы есть\n");
+    }
+}
