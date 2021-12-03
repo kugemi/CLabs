@@ -1,7 +1,9 @@
-﻿#include <stdio.h>
+﻿//ver 0.2 // С динамическим выделением памяти
+#include <stdio.h>
 #include <conio.h>
 #include <locale.h>
 #include <math.h>
+#include <stdlib.h>
 
 #define lineBreak printf("\n")
 #define Space(lenghtString) for (int i = 0; i < ((80-lenghtString)/2); i++) printf(" ")
@@ -12,14 +14,14 @@ void main()
 	setlocale(LC_ALL, "Rus");
 
 	// Константы
-	const int max_items = 10;             // Ограничение кол-ва предметов
-	const int max = 1024;                 // Ограничение массивов
+	//const int max_items = 10;             // Ограничение кол-ва предметов
+	//const int max = 1024;                 // Ограничение массивов
 	const int k = 70;
 
-	 //        Переменные, вводимые с клавиатуры
+	//        Переменные, вводимые с клавиатуры
 	unsigned int itemNumber = 0;          // Количество предметов 
-	unsigned int itemWeight[max] = { 0 }; // Вес каждого предмета
-	unsigned int itemUsefull[max] = { 0 };// Полезность каждого предмета
+	//unsigned int itemWeight[max] = { 0 }; // Вес каждого предмета
+	//unsigned int itemUsefull[max] = { 0 };// Полезность каждого предмета
 	unsigned int briefcaseCapacity = 0;   // Вместимость портфеля
 
 	//         Переменные программы
@@ -55,33 +57,29 @@ void main()
 	//Ввод и проверка кол-ва предметов
 	Space(k);; printf("  | Введите количество предметов, которое бы Вы\n");
 	Space(k); printf("  | хотели поместить в ранец.\n");
-	Space(k); printf("  | Кол-во не должно превышать %d\n", max_items);
 	Space(k); printf(">>| ");
-	while ((scanf_s("%ud", &itemNumber) == 0) || (itemNumber > max_items))
+	while ((scanf_s("%ud", &itemNumber) == 0))
 	{
-		if (itemNumber > max_items)
-		{
-			Space(k); printf("  | [X] Вы ввели число больше %d.\n", max_items);
-			Space(k); printf("  | [X] Пожалуйста, будьте внимательны!\n");
-			getchar() != '\0';
-		}
-		else
-		{
-			Space(k); printf("  | [X] Вы ввели символ.\n");
-			Space(k); printf("  | [X] Пожалуйста, будьте внимательны!\n");
-			getchar() != '\0';	
-		}
+
+
+		Space(k); printf("  | [X] Вы ввели символ.\n");
+		Space(k); printf("  | [X] Пожалуйста, будьте внимательны!\n");
+		getchar() != '\0';
+
 		Space(k); printf(">>| ");
 	}
 	lineBreak;
 
+
+	unsigned int* itemWeight = (unsigned int*)malloc(sizeof(unsigned int) * itemNumber); // Вес каждого предмета
+	unsigned int* itemUsefull = (unsigned int*)malloc(sizeof(unsigned int) * itemNumber); // Полезность каждого предмета
 
 	// Ввод массы и полезности каждого предмета
 	Space(k); printf("  | Введите массу и ползеность каждого предмета\n");
 	for (index = 0; index < itemNumber; index++)
 	{
 		Space(k); printf("  |\n");
-		Space(k); printf("  | Предмет номер %d\n", index+1);
+		Space(k); printf("  | Предмет номер %d\n", index + 1);
 		Space(k); printf(">>| - Масса предмета: ");
 		scanf_s("%ud", &itemWeight[index]);
 		Space(k); printf(">>| - Полезность: ");
@@ -94,7 +92,7 @@ void main()
 	Space(k); printf("    Ваши предметы:\n");
 	printf(" |----------------------------------------------------------------------\n");
 	printf(" | Номер:  ");
-	for (index = 0; index < itemNumber; index++) printf("#%3d| ", index+1);
+	for (index = 0; index < itemNumber; index++) printf("#%3d| ", index + 1);
 	lineBreak;
 	printf(" |----------------------------------------------------------------------\n");
 	printf(" | Weight: ");
@@ -112,7 +110,7 @@ void main()
 		mask = 1;       //"Обнуление" маски, присваивание изначального значения
 		runUsefull = 0; // Обнуление текущей полезности
 		runWeight = 0;  // Обнуление текущего веса
-		
+
 		// Осуществляется перебор по битам index 
 		for (Jndex = 0; Jndex < itemNumber; Jndex++)
 		{
@@ -121,7 +119,7 @@ void main()
 				runUsefull += itemUsefull[Jndex];   // ... то суммируется полезность и вес предмета на месте кол-ва итераций Jndex
 				runWeight += itemWeight[Jndex];
 			}
-			mask <<= 1; 
+			mask <<= 1;
 			//printf("\\\ni = %d\nJndex = %d\nmask = %d\nrunUsefull = %d\nrunWeight = %d\nto_samoe = %d\n\n", index, Jndex, mask, runUsefull, runWeight, to_samoe);
 		}
 		// Если текущий вес меньше вместимости ранца И текущая полезность выше максимальной...
@@ -134,7 +132,7 @@ void main()
 			// в номер "той самой" итерации сохраняется значение index
 			numberBruteforse = index;
 		}
-		
+
 	}
 	// Вывод решения
 	lineBreak;
@@ -155,4 +153,7 @@ void main()
 	Space(k); printf("  ------------------------------------\n");
 	Space(k); printf("  | Полезность предметов = %d\n", maxUsefull);
 	Space(k); printf("  | Масса предметов      = %d\n", maxWeight);
+
+	free(itemWeight);
+	free(itemUsefull);
 }
