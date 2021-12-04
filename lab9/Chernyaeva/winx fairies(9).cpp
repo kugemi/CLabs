@@ -17,6 +17,8 @@ int main()
 	char* roughСopy = NULL;
 	char auxiliaryString = NULL;
 	int stringLength = 0;
+	char* theFirstAssistant = NULL;//для нормальной работы realloc
+	char** theSecondAssistant = NULL;//для нормальной работы realloc
 
 	arrayOfStrings = (char**)malloc(sizeof(char*));
 	printf("Введите строки:\n");
@@ -26,10 +28,11 @@ int main()
 		printf("%d)", index + 1);
 		stringLength = 0;
 		roughСopy = (char*)malloc(sizeof(char));
-
+		theFirstAssistant = (char*)malloc(sizeof(char));
 		while ((auxiliaryString = getchar()) != '\n')
 		{
-			roughСopy = (char*)realloc(roughСopy, (stringLength + 2) * sizeof(char));
+			theFirstAssistant = (char*)realloc(roughСopy, (stringLength + 2) * sizeof(char));
+			roughСopy = theFirstAssistant;
 			if (roughСopy != NULL)
 			{
 				roughСopy[stringLength] = auxiliaryString;
@@ -44,7 +47,8 @@ int main()
 		}
 		else
 		{
-			arrayOfStrings = (char**)realloc(arrayOfStrings, (index + 2) * sizeof(char*));
+			theSecondAssistant= (char**)realloc(arrayOfStrings, (index + 2) * sizeof(char*));
+			arrayOfStrings = theSecondAssistant;
 			arrayOfStrings[index] = (char*)malloc((strlen(roughСopy) + 1) * sizeof(char));
 			strcpy_my(arrayOfStrings[index], roughСopy);
 			numberOfRows++;
