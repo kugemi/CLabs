@@ -13,32 +13,40 @@ int main()
 	setlocale(LC_ALL, "Rus");
 
 	char** arrayOfStrings = NULL;
-	int numberOfRows = 0;
 	char* roughСopy = NULL;
 	char auxiliaryString = NULL;
-	int stringLength = 0;
 	char* theFirstAssistant = NULL;//для нормальной работы realloc
 	char** theSecondAssistant = NULL;//для нормальной работы realloc
+	int numberOfRows = 0;
+	int stringLength = 0;
+	int memoryString = 0;
+	int memoryArray = 2;
 
-	arrayOfStrings = (char**)malloc(sizeof(char*));
+	arrayOfStrings = (char**)malloc(2 * sizeof(char*));
 	printf("Введите строки:\n");
 
 	for (int index = 0;; index++)
 	{
 		printf("%d)", index + 1);
 		stringLength = 0;
-		roughСopy = (char*)malloc(sizeof(char));
-		theFirstAssistant = (char*)malloc(sizeof(char));
+		memoryString = 2;
+		roughСopy = (char*)malloc(2 * sizeof(char));
+		theFirstAssistant = (char*)malloc(2 * sizeof(char));
 		while ((auxiliaryString = getchar()) != '\n')
 		{
-			theFirstAssistant = (char*)realloc(roughСopy, (stringLength + 2) * sizeof(char));
-			roughСopy = theFirstAssistant;
+			if (stringLength == memoryString)
+			{
+				memoryString = memoryString * 2;
+				theFirstAssistant = (char*)realloc(roughСopy, (memoryString + 2) * sizeof(char));
+				roughСopy = theFirstAssistant;
+			}
 			if (roughСopy != NULL)
 			{
 				roughСopy[stringLength] = auxiliaryString;
 				stringLength++;
 			}
 		}
+		roughСopy = (char*)realloc(roughСopy, (stringLength + 1) * sizeof(char));
 		roughСopy[stringLength] = '\0';
 		if (!*roughСopy)
 		{
@@ -47,14 +55,18 @@ int main()
 		}
 		else
 		{
-			theSecondAssistant= (char**)realloc(arrayOfStrings, (index + 2) * sizeof(char*));
-			arrayOfStrings = theSecondAssistant;
+			if (numberOfRows >= memoryArray) {
+				memoryArray = memoryArray * 3;
+				theSecondAssistant = (char**)realloc(arrayOfStrings, memoryArray * sizeof(char*));
+				arrayOfStrings = theSecondAssistant;
+			}
 			arrayOfStrings[index] = (char*)malloc((strlen(roughСopy) + 1) * sizeof(char));
 			strcpy_my(arrayOfStrings[index], roughСopy);
 			numberOfRows++;
 		}
 		free(roughСopy);
 	}
+	arrayOfStrings = (char**)realloc(arrayOfStrings, numberOfRows * sizeof(char*));
 	printf("-----------------------");
 	printf("\nОтсортированные строки:\n");
 	printf("-----------------------\n");
@@ -108,11 +120,9 @@ char** sort(char** userArray, int numberOfElements)
 			if (stcmp_my(userArray[jndex], userArray[jndex + 1]))
 			{
 				isFlag = 0;
-				roughСopy = (char*)malloc((strlen(userArray[jndex]) + 1) * sizeof(char));
-				strcpy_my(roughСopy, userArray[jndex]);
-				strcpy_my(userArray[jndex], userArray[jndex + 1]);
-				strcpy_my(userArray[jndex + 1], roughСopy);
-				free(roughСopy);
+				roughСopy = userArray[jndex];
+				userArray[jndex] = userArray[jndex + 1];
+				userArray[jndex + 1] = roughСopy;
 			}
 		}
 		if (isFlag)
