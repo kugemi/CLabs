@@ -94,7 +94,7 @@ int main()
     for (i = 0; i < details; i++) {
         printf_s("%-4d", matrix[0][i]);
     }
-    printf_s("\nСтанок №1: ");
+    printf_s("\nСтанок №2: ");
     for (i = 0; i < details; i++) {
         printf_s("%-4d", matrix[1][i]);
     }
@@ -115,8 +115,7 @@ int main()
         }
     }
     num = sum;
-    printf_s("\n");
-    printf_s("\nСтанок №1: ");
+    printf_s("\nСтанок №2: ");
     sum = 0;
     for (j = 0; j < details; j++) {
         for (k = 0; k < matrix[1][j]; k++) {
