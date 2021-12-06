@@ -5,42 +5,42 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-int** sortmin(int** arr, int m, int n) {
-    int index1=0, index2=0;
+int** sortmin(int** arr, int machines, int details) {
+    int indexMin1=0, indexMin2=0;
     int min = 0;
     int** addArr = NULL;
-    addArr = (int**)malloc(m * sizeof(int*));
-    for (int i = 0; i < m; i++)addArr[i] = (int*)malloc((n) * sizeof(int));
-    addArr[2] = new int[n];
-    int j = 0;
-    int i = 0;
-    int a = 0, b = n;
-    while (a < b) {
-        for (i = 0; i < m; i++) {
-            for (j = 0; j < n; j++) {
-                if ((((i == 0) & (j == 0)) || (arr[i][j] < min)) & (arr[i][j] != NULL)) {
-                    min = arr[i][j];
-                    index1 = i;
-                    index2 = j;
+    addArr = (int**)malloc(machines * sizeof(int*));
+    for (int i = 0; i < machines; i++)addArr[i] = (int*)malloc((details) * sizeof(int));
+    addArr[2] = new int[details];
+    int countDetails = 0;
+    int countMachines = 0;
+    int begin = 0, end = details;
+    while (begin < end) {
+        for (countMachines = 0; countMachines < machines; countMachines++) {
+            for (countDetails = 0; countDetails < details; countDetails++) {
+                if ((((countMachines == 0) & (countDetails == 0)) || (arr[countMachines][countDetails] < min)) & (arr[countMachines][countDetails] != NULL)) {
+                    min = arr[countMachines][countDetails];
+                    indexMin1 = countMachines;
+                    indexMin2 = countDetails;
 
                 }
             }
         }
-        if (index1 == 1) {
-            addArr[0][b - 1] = arr[index1 - 1][index2];
-            addArr[1][b - 1] = arr[index1][index2];
-            addArr[2][b - 1] = arr[index1 + 1][index2];
-            b--;
-            arr[index1][index2] = 3000000;
-            arr[index1 - 1][index2] = 3000000;
+        if (indexMin1 == 1) {
+            addArr[0][end - 1] = arr[indexMin1 - 1][indexMin2];
+            addArr[1][end - 1] = arr[indexMin1][indexMin2];
+            addArr[2][end - 1] = arr[indexMin1 + 1][indexMin2];
+            end--;
+            arr[indexMin1][indexMin2] = 3000000;
+            arr[indexMin1 - 1][indexMin2] = 3000000;
         }
         else {
-            addArr[0][a] = arr[index1][index2];
-            addArr[1][a] = arr[index1 + 1][index2];
-            addArr[2][a] = arr[index1 + 2][index2];
-            a++;
-            arr[index1][index2] = 30000000;
-            arr[index1 + 1][index2] = 30000000;
+            addArr[0][begin] = arr[indexMin1][indexMin2];
+            addArr[1][begin] = arr[indexMin1 + 1][indexMin2];
+            addArr[2][begin] = arr[indexMin1 + 2][indexMin2];
+            begin++;
+            arr[indexMin1][indexMin2] = 30000000;
+            arr[indexMin1 + 1][indexMin2] = 30000000;
         }
     }
     return addArr;
@@ -51,15 +51,14 @@ int main()
 {
     setlocale(LC_ALL, "");
 
-    int sum = 0, sum2 = 0, sum3 = 0;
+    int countTimeMach1 = 0, countTimeMach2 = 0, totalTime = 0;
     int** matrix = NULL;
     int details = 0;;
-    int i, j = 0;
+    int strings, columns = 0;
     int mach = 0;
-    int num = 0, num2 = 0;
-    int k=0;
-    int P[200] = { 0 };
-    int P2[200] = { 0 };
+    int timeMach1 = 0, timeMach2 = 0;
+    int gant1[200] = { 0 };
+    int gant2[200] = { 0 };
     FILE* f;
 
     printf_s("Введите кол-во деталей: ");
@@ -67,75 +66,87 @@ int main()
     f = fopen("text.txt", "r");
     fscanf_s(f, "%d", &mach);
     matrix = (int**)malloc(mach * sizeof(int*));
-    for (i = 0; i < mach; i++)matrix[i] = (int*)malloc(details * sizeof(int));
-    i = 0;
-    j = 0;
-    fscanf_s(f, "%d", &matrix[i][j]);
-    fscanf_s(f, "%d", &matrix[i + 1][j]);
+    for (strings = 0; strings < mach; strings++)matrix[strings] = (int*)malloc(details * sizeof(int));
+    strings = 0;
+    columns = 0;
+    fscanf_s(f, "%d", &matrix[strings][columns]);
+    fscanf_s(f, "%d", &matrix[strings + 1][columns]);
     while (!feof(f)) {
-        j++;
-        if (j >= details) break;
-        fscanf_s(f, "%d", &matrix[i][j]);
-        fscanf_s(f, "%d", &matrix[i + 1][j]);
+        columns++;
+        if (columns >= details) break;
+        fscanf_s(f, "%d", &matrix[strings][columns]);
+        fscanf_s(f, "%d", &matrix[strings + 1][columns]);
     }
     fclose(f);
 
+
     matrix[2] = new int[details];
-    for (j = 0; j < details; j++) {
-        matrix[2][j] = j + 1;
+    for (columns = 0; columns < details; columns++) {
+        matrix[2][columns] = columns + 1;
 
     }
+
+
     printf_s("\n___________________________\nИнформация о времени обработки деталей:\n");
     printf_s("Детали:    ");
-    for (i = 0; i < details; i++) {
-        printf_s("%-4d", matrix[2][i]);
+    for (strings = 0; strings < details; strings++) {
+        printf_s("%-4d", matrix[2][strings]);
     }
     printf_s("\nСтанок №1: ");
-    for (i = 0; i < details; i++) {
-        printf_s("%-4d", matrix[0][i]);
+    for (strings = 0; strings < details; strings++) {
+        printf_s("%-4d", matrix[0][strings]);
     }
     printf_s("\nСтанок №2: ");
-    for (i = 0; i < details; i++) {
-        printf_s("%-4d", matrix[1][i]);
+    for (strings = 0; strings < details; strings++) {
+        printf_s("%-4d", matrix[1][strings]);
     }
     printf_s("\n___________________________\n");
+
+
     matrix = sortmin(matrix, mach, details);
+
+
     printf_s("Выгодный порядок обработки: ");
-    for (i = 0; i < details; i++) {
-        printf_s("%-4d", matrix[2][i]);
+    for (strings = 0; strings < details; strings++) {
+        printf_s("%-4d", matrix[2][strings]);
     }
+
+
     printf_s("\n___________________________\n");
     printf_s("График ганта: ");
     printf_s("\nСтанок №1: ");
-    for (j = 0; j < details; j++) {
-        for (i = 0;i < matrix[0][j]; i++) {
-            P[sum] = matrix[2][j];
-            printf_s("%d",P[sum]);
-            sum ++;
+    for (columns = 0; columns < details; columns++) {
+        for (strings = 0;strings < matrix[0][columns]; strings++) {
+            gant1[countTimeMach1] = matrix[2][columns];
+            printf_s("%d",gant1[countTimeMach1]);
+            countTimeMach1 ++;
         }
     }
-    num = sum;
+
+    timeMach1 = countTimeMach1;
     printf_s("\nСтанок №2: ");
-    sum = 0;
-    for (j = 0; j < details; j++) {
-        for (k = 0; k < matrix[1][j]; k++) {
-            P2[sum2] = matrix[2][j];
-            sum2 += 1;
+    countTimeMach1 = 0;
+    for (columns = 0; columns < details; columns++) {
+        for (strings = 0; strings < matrix[1][columns]; strings++) {
+            gant2[countTimeMach2] = matrix[2][columns];
+            countTimeMach2 += 1;
         }
     }
-    num2 = sum2;
-    sum2 = 0;
-    while ((sum < num) || sum2 < num2) {
-        if (P[sum] == P2[sum2]) {
+    timeMach2 = countTimeMach2;
+    countTimeMach2 = 0;
+
+    while ((countTimeMach1 < timeMach1) || countTimeMach2 < timeMach2) {
+        if (gant1[countTimeMach1] == gant2[countTimeMach2]) {
             printf_s(" ");
-            sum++;
+            countTimeMach1++;
         }
         else {
-            printf("%d", P2[sum2]);
-            sum++;
-            sum2++;
+            printf("%d", gant2[countTimeMach2]);
+            countTimeMach1++;
+            countTimeMach2++;
         }
-        sum3 += 1;
+        totalTime += 1;
     }
-    printf_s("\nВремя обработки: %d", sum3);
+    printf_s("\nВремя обработки: %d", totalTime);
+    printf_s("\n___________________________\n");
 }
