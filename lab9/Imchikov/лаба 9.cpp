@@ -10,39 +10,34 @@ while ((*s1++ = *s2++) != 0);
 return ptrs1;
 }
 
+
 int strcmp_my(char* str1, char* str2) {
-	while (*str1 && *str2)
+	while (*str1 == *str2)
 	{
-		if (*str1 == *str2)
-		{
-			str1++;
-			str2++;
-		}
-		if (*str1 > *str2) return 1;
-		else return 0;
+		str1++;
+		str2++;
 	}
+		if (*str1 > *str2)  return 1;
+		if (*str1 <= *str2)  return 0;	
 }
 
 char** sort(char** text, int strings) {
-	char** text1 = (char**)malloc(strings * sizeof(char*));
 	char* str = (char*)malloc(strlen(text[0]) * sizeof(char));
 
-	for (int i = 0; i < strings; i++) {
-		text1[i] = (char*)malloc(strlen(text[i]) * sizeof(char));
-		strcpy_my(text1[i], text[i]);
-	}
+
 	for (int i = 0; i < strings - 1; i++) {
 		for (int k = i + 1; k < strings; k++) {
-			if (strcmp_my(text1[i], text1[k])) {
-				str = (char*)realloc(str, strlen(text[i]) * sizeof(char));
-				strcpy_my(str, text1[i]);
-				strcpy_my(text1[i], text1[k]);
-				strcpy_my(text1[k], str);
+			if (strcmp_my(text[i], text[k])) {
+				str = text[i];
+				text[i] = text[k];
+				text[k] = str;
 			}
 		}
 	}
-	return text1;
+	return text;
 }
+
+
 int main()
 {
 	int string = 0;
