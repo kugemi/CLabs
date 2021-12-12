@@ -98,7 +98,7 @@ int main()
 	}
 
 	//вывод очереди
-	Space(q); printf("  | Оптимальная очередль обработки деталей\n");
+	Space(q); printf("  | Оптимальная очередь обработки деталей\n");
 	Space(q); printf(">>| ");
 	for (int i = 0; i < detailCount; i++) printf("%d ", queue[i] + 1);
 	lineBreak;
@@ -118,35 +118,49 @@ int main()
 	Space(q); printf("  |-------------------------------------------\n");
 	Space(q); printf("  | График Ганта\n");
 	Space(q); printf("  | ");
+
 	//График Ганта
 	lineBreak;
-	for (int i = 0; i < machineCount; i++)  //счётчик по количеству станков
-	{
-		Space(q);
-		printf("  | Станок #%d: ", i + 1);
-		for (int indexR = 0; indexR < detailCount; indexR++)
-		{
-			for (int j = 0; j < matrizeofTimes[queue[indexR]][i]; j++)
-			{
-				printf("%d ", queue[indexR] + 1);
-			}
-		}
-		lineBreak;
-	}
-	Space(q); printf("  |-------------------------------------------\n");
+	//for (int i = 0; i < machineCount; i++)  //счётчик по количеству станков
+	//{
+	//	Space(q);
+	//	printf("  | Станок #%d: ", i + 1);
+	//	for (int indexR = 0; indexR < detailCount; indexR++)
+	//	{
+	//		for (int j = 0; j < matrizeofTimes[queue[indexR]][i]; j++)
+	//		{
+	//			printf("%d ", queue[indexR] + 1);
+	//		}
+	//	}
+	//	lineBreak;
+	//}
+	//Space(q); printf("  |-------------------------------------------\n");
 
-	//Подсчёт времени на каждом станке. Выводим максимальный
+
+	//Подсчёт времени на каждом станке и создание массива для графика Ганта. Выводим максимальный
+	//График Ганта
+	char** Gant = NULL;
+	Gant = (char**)malloc(sizeof(char*) * machineCount);
+	for (int i = 0; i< machineCount; i++) Gant[i] = (char*)malloc(sizeof(char));
+	// Массив времён
 	int* Time = NULL;
 	Time = (int*)malloc(sizeof(int) * machineCount);
 	for (int i = 0; i < machineCount; i++) *(Time + i) = 0;
 
 	for (int iteracia = 0; iteracia < (detailCount + machineCount - 1); iteracia++)
 	{
+
 		int k = iteracia;
 		for (int timeCount = 0; timeCount < machineCount; timeCount++)  //присваиваем значения
 		{
 			if ((k>=0)&&(k < detailCount)&&(Time))
 			{
+
+				Gant[timeCount] = (char*)realloc(Gant[timeCount], sizeof(char) * Time[timeCount] + matrizeofTimes[queue[k]][timeCount]);
+				for (int i = Time[timeCount]; i < Time[timeCount] + matrizeofTimes[queue[k]][timeCount]; i++)
+				{
+					Gant[timeCount][i] = queue[k] + 1 + '0';
+				}
 				Time[timeCount] += matrizeofTimes[queue[k]][timeCount];
 			}
 			k--;
@@ -155,16 +169,36 @@ int main()
 		{
 			if ((Time[timeCount + 1] < Time[timeCount]) && (Time[timeCount + 1] >= 0) && (Time[timeCount] > 0))
 			{
+				Gant[timeCount+1] = (char*)realloc(Gant[timeCount+1], sizeof(char) * Time[timeCount]);
+				for (int i = Time[timeCount + 1]; i < Time[timeCount]; i++)
+				{
+					Gant[timeCount+1][i] = ' ';
+				}
 				Time[timeCount + 1] = Time[timeCount];
+
 			}
 		}
 	}
-	Space(q); printf("  | Время обработки всех деталей: ");
+
 	maxNumber = 0;
+
 	for (int i = 0; i < machineCount; i++)
 	{
 		if (maxNumber < Time[i]) maxNumber = Time[i];
 	}
+	for (int i = 0; i < machineCount; i++)
+	{
+		Space(q);
+		printf("  | Станок #%d: ", i + 1);
+
+		for (int j = 0; j < maxNumber; j++)
+		{
+			if (Gant[i][j]>0) printf("%c", Gant[i][j]);
+		}
+		lineBreak;
+	}
+	Space(q); printf("  |-------------------------------------------\n");
+	Space(q); printf("  | Время обработки всех деталей: ");
 	printf("%d", maxNumber);
 	lineBreak;
 	Space(q); printf("  |-------------------------------------------\n");
@@ -173,6 +207,8 @@ int main()
 	free(Time);
 	free(queue);
 	for (int i = 0; i < detailCount; i++) free(matrizeofTimes[i]);
+	for (int i = 0; i < machineCount; i++) free(Gant[i]);
+	free(Gant);
 	free(matrizeofTimes);
 }
 int ind(int* M, int SIZE, int n)
