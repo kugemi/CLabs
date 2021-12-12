@@ -26,32 +26,20 @@ int stcmp_my(char* pervayaya, char* vtorayaya) {
 	}
 	return 0;
 }
-char** sort(char** mnogoStrok, int skokStrok)
+char** sort(char** a, int n)
 {
-	char* chernovik = NULL;
-	for (int index = 1; index < skokStrok; index++) {
-		for (int kindex = index; kindex > 0; kindex--) {
-			if (stcmp_my(mnogoStrok[kindex - 1], mnogoStrok[kindex])) {
-				chernovik = mnogoStrok[kindex];
-				mnogoStrok[kindex] = mnogoStrok[kindex - 1];
-				mnogoStrok[kindex - 1] = chernovik;
-				for (index = 1; index < skokStrok; index++) {
-					for (kindex = 1; kindex <= skokStrok - index; kindex++) {
-						if (stcmp_my(mnogoStrok[kindex - 1], mnogoStrok[kindex])) {
-							chernovik = mnogoStrok[kindex];
-							mnogoStrok[kindex] = mnogoStrok[kindex - 1];
-							mnogoStrok[kindex - 1] = chernovik;
-
-
-
-						}
-
-					}
-				}
+	char* t = NULL;
+	for (int index = 0; index < n; index++) {
+		for (int kindex = 0; kindex < n - 1; kindex++) {
+			if (stcmp_my(a[kindex],a[kindex+1])) {
+				t = a[kindex]; 
+				a[kindex] = a[kindex + 1]; 
+				a[kindex + 1] = t; 
 			}
 		}
 	}
-	return mnogoStrok;
+
+	return a;
 }
 char* strcpy_my(char* plagiat, char* original) {
 	char* save = plagiat;
@@ -69,8 +57,8 @@ int main()
 	for (int index = 0; index < 100; index++) {
 		gets_s(buf);
 		if (!*buf) break;
-		masStr = (char**)realloc(masStr, (index + 1) * sizeof(char*));
-		masStr[index] = (char*)malloc((strlen(buf) + 1) * sizeof(char));
+		masStr = (char**)realloc(masStr,(index+1)*sizeof(char*));
+		masStr[index] = (char*)malloc((strlen(buf) + 1)*sizeof(char));
 		strcpy_my(masStr[index], buf);
 		kolvoStrok++;
 	}
