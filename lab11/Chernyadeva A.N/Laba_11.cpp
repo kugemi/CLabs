@@ -121,21 +121,6 @@ int main()
 
 	//График Ганта
 	lineBreak;
-	//for (int i = 0; i < machineCount; i++)  //счётчик по количеству станков
-	//{
-	//	Space(q);
-	//	printf("  | Станок #%d: ", i + 1);
-	//	for (int indexR = 0; indexR < detailCount; indexR++)
-	//	{
-	//		for (int j = 0; j < matrizeofTimes[queue[indexR]][i]; j++)
-	//		{
-	//			printf("%d ", queue[indexR] + 1);
-	//		}
-	//	}
-	//	lineBreak;
-	//}
-	//Space(q); printf("  |-------------------------------------------\n");
-
 
 	//Подсчёт времени на каждом станке и создание массива для графика Ганта. Выводим максимальный
 	//График Ганта
